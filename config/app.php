@@ -181,6 +181,15 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+    /**
+     * SleepingOwl Service Provider
+     */
+        SleepingOwl\Admin\Providers\SleepingOwlServiceProvider::class,
+
+    /**
+     * Application Service Providers...
+     */
+        App\Providers\AppServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -189,7 +198,6 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
