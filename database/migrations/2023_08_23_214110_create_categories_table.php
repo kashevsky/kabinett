@@ -17,6 +17,10 @@ return new class extends Migration
             $table->id();
             $table->text('content')->nullable();
             $table->string('preview_image')->nullable();
+            $table->string('mini_logo')->nullable();
+            $table->string('price')->nullable();
+            $table->string('opt_price')->nullable();
+            $table->string('article')->nullable();
             $table->string('title')->nullable();
             $table->string('slug')->nullable();
             $table->timestamps();

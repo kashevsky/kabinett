@@ -57,26 +57,7 @@ class Product extends Section implements Initializable
     public function onDisplay($payload = [])
     {
         $columns = [
-            AdminColumn::text('id', '#')->setWidth('50px')->setHtmlAttribute('class', 'text-center'),
-            AdminColumn::link('name', 'Name', 'created_at')
-                ->setSearchCallback(function($column, $query, $search){
-                    return $query
-                        ->orWhere('name', 'like', '%'.$search.'%')
-                        ->orWhere('created_at', 'like', '%'.$search.'%')
-                    ;
-                })
-                ->setOrderable(function($query, $direction) {
-                    $query->orderBy('created_at', $direction);
-                })
-            ,
-            AdminColumn::boolean('name', 'On'),
-            AdminColumn::text('created_at', 'Created / updated', 'updated_at')
-                ->setWidth('160px')
-                ->setOrderable(function($query, $direction) {
-                    $query->orderBy('updated_at', $direction);
-                })
-                ->setSearchable(false)
-            ,
+            AdminColumn::text('title', 'Заголовок')->setWidth('250px')->setHtmlAttribute('class', 'text-center'),
         ];
 
         $display = AdminDisplay::datatables()
@@ -88,17 +69,17 @@ class Product extends Section implements Initializable
             ->setHtmlAttribute('class', 'table-primary table-hover th-center')
         ;
 
-        $display->setColumnFilters([
-            AdminColumnFilter::select()
-                ->setModelForOptions(\App\Models\Product::class, 'name')
-                ->setLoadOptionsQueryPreparer(function($element, $query) {
-                    return $query;
-                })
-                ->setDisplay('name')
-                ->setColumnName('name')
-                ->setPlaceholder('All names')
-            ,
-        ]);
+        // $display->setColumnFilters([
+        //     AdminColumnFilter::select()
+        //         ->setModelForOptions(\App\Models\Product::class, 'name')
+        //         ->setLoadOptionsQueryPreparer(function($element, $query) {
+        //             return $query;
+        //         })
+        //         ->setDisplay('name')
+        //         ->setColumnName('name')
+        //         ->setPlaceholder('All names')
+        //     ,
+        // ]);
         $display->getColumnFilters()->setPlacement('card.heading');
 
         return $display;
@@ -115,17 +96,13 @@ class Product extends Section implements Initializable
         $form = AdminForm::card()->addBody([
             AdminFormElement::columns()->addColumn([
                 AdminFormElement::text('title', 'Заголовок'),
-                AdminFormElement::select('category_id', 'Вложенные продукты', \App\Models\Category::class)->setDisplay('title'),
+                AdminFormElement::select('sub_category_id', 'Товар', \App\Models\SubCategory::class)->setDisplay('title'),
                 AdminFormElement::html('<hr>'),
-                AdminFormElement::datetime('created_at')
-                    ->setVisible(true)
-                    ->setReadonly(false)
-                ,
-                AdminFormElement::html('last AdminFormElement without comma')
-            ], 'col-xs-12 col-sm-6 col-md-4 col-lg-4')->addColumn([
-                AdminFormElement::text('id', 'ID')->setReadonly(true),
-                AdminFormElement::html('last AdminFormElement without comma')
-            ], 'col-xs-12 col-sm-6 col-md-8 col-lg-8'),
+            ], 'col-xs-12 col-sm-6 col-md-6 col-lg-6')->addColumn([
+                AdminFormElement::text('price', 'Цена'),
+                AdminFormElement::text('opt_price', 'Оптовая цена'),
+            ], 'col-xs-12 col-sm-6 col-md-6 col-lg-6'),
+            AdminFormElement::wysiwyg('content', 'Текст'),
         ]);
 
         $form->getButtons()->setButtons([

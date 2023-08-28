@@ -18,13 +18,13 @@ use SleepingOwl\Admin\Form\Buttons\SaveAndCreate;
 use SleepingOwl\Admin\Section;
 
 /**
- * Class Users
+ * Class SubProduct
  *
- * @property \App\Category $model
+ * @property \App\Providers\SubProduct $model
  *
  * @see https://sleepingowladmin.ru/#/ru/model_configuration_section
  */
-class Users extends Section implements Initializable
+class SubProduct extends Section implements Initializable
 {
     /**
      * @var bool
@@ -34,7 +34,7 @@ class Users extends Section implements Initializable
     /**
      * @var string
      */
-    protected $title;
+    protected $title = 'Вложенные товары';
 
     /**
      * @var string
@@ -57,7 +57,7 @@ class Users extends Section implements Initializable
     public function onDisplay($payload = [])
     {
         $columns = [
-            AdminColumn::text('id', '#')->setWidth('50px')->setHtmlAttribute('class', 'text-center'),
+            AdminColumn::text('title', '#')->setWidth('250px')->setHtmlAttribute('class', 'text-center'),
             AdminColumn::link('name', 'Name', 'created_at')
                 ->setSearchCallback(function($column, $query, $search){
                     return $query
@@ -90,7 +90,7 @@ class Users extends Section implements Initializable
 
         // $display->setColumnFilters([
         //     AdminColumnFilter::select()
-        //         ->setModelForOptions(\App\Category::class, 'name')
+        //         ->setModelForOptions(\App\Providers\SubProduct::class, 'name')
         //         ->setLoadOptionsQueryPreparer(function($element, $query) {
         //             return $query;
         //         })
@@ -99,7 +99,7 @@ class Users extends Section implements Initializable
         //         ->setPlaceholder('All names')
         //     ,
         // ]);
-        $display->getColumnFilters()->setPlacement('card.heading');
+        // $display->getColumnFilters()->setPlacement('card.heading');
 
         return $display;
     }
@@ -127,6 +127,7 @@ class Users extends Section implements Initializable
                 AdminFormElement::text('id', 'ID')->setReadonly(true),
                 AdminFormElement::html('last AdminFormElement without comma')
             ], 'col-xs-12 col-sm-6 col-md-8 col-lg-8'),
+            AdminFormElement::wysiwyg('content', 'Текст'),
         ]);
 
         $form->getButtons()->setButtons([

@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\SubProduct;
+use App\Models\SubCategory;
 use SleepingOwl\Admin\Providers\AdminSectionsServiceProvider as ServiceProvider;
 
 class AdminSectionsServiceProvider extends ServiceProvider
@@ -14,7 +16,9 @@ class AdminSectionsServiceProvider extends ServiceProvider
      */
     protected $sections = [
         Category::class => 'App\Http\Sections\Category',
+        SubCategory::class => 'App\Http\Sections\SubCategory',
         Product::class => 'App\Http\Sections\Product',
+        SubProduct::class => 'App\Http\Sections\SubProduct',
     ];
 
     /**

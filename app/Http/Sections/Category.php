@@ -58,7 +58,7 @@ class Category extends Section implements Initializable
     public function onDisplay($payload = [])
     {
         $columns = [
-            AdminColumn::text('title', '#')->setWidth('50px')->setHtmlAttribute('class', 'text-center'),
+            AdminColumn::text('title', '#')->setWidth('250px')->setHtmlAttribute('class', 'text-center'),
             AdminColumn::link('name', 'Name', 'created_at')
                 ->setSearchCallback(function($column, $query, $search){
                     return $query
@@ -89,17 +89,17 @@ class Category extends Section implements Initializable
             ->setHtmlAttribute('class', 'table-primary table-hover th-center')
         ;
 
-        $display->setColumnFilters([
-            AdminColumnFilter::select()
-                ->setModelForOptions(\App\Models\Category::class, 'name')
-                ->setLoadOptionsQueryPreparer(function($element, $query) {
-                    return $query;
-                })
-                ->setDisplay('name')
-                ->setColumnName('name')
-                ->setPlaceholder('All names')
-            ,
-        ]);
+        // $display->setColumnFilters([
+        //     AdminColumnFilter::select()
+        //         ->setModelForOptions(\App\Models\Category::class, 'name')
+        //         ->setLoadOptionsQueryPreparer(function($element, $query) {
+        //             return $query;
+        //         })
+        //         ->setDisplay('name')
+        //         ->setColumnName('name')
+        //         ->setPlaceholder('All names')
+        //     ,
+        // ]);
         $display->getColumnFilters()->setPlacement('card.heading');
 
         return $display;
@@ -116,17 +116,14 @@ class Category extends Section implements Initializable
         $form = AdminForm::card()->addBody([
             AdminFormElement::columns()->addColumn([
                 AdminFormElement::text('title', 'Заголовок'),
-                AdminFormElement::image('preview_image', 'Превью'),
+                AdminFormElement::select('sub_category_id', 'Товар', \App\Models\SubCategory::class)->setDisplay('title'),
                 AdminFormElement::html('<hr>'),
-                AdminFormElement::datetime('created_at')
-                    ->setVisible(true)
-                    ->setReadonly(false)
-                ,
-                AdminFormElement::html('last AdminFormElement without comma')
-            ], 'col-xs-12 col-sm-6 col-md-4 col-lg-4')->addColumn([
-                AdminFormElement::text('id', 'ID')->setReadonly(true),
-                AdminFormElement::html('last AdminFormElement without comma')
-            ], 'col-xs-12 col-sm-6 col-md-8 col-lg-8'),
+            ], 'col-xs-12 col-sm-6 col-md-6 col-lg-6')->addColumn([
+                AdminFormElement::text('price', 'Цена'),
+                AdminFormElement::text('opt_price', 'Оптовая цена'),
+            ], 'col-xs-12 col-sm-6 col-md-6 col-lg-6'),
+            AdminFormElement::wysiwyg('content', 'Текст'),
+            AdminFormElement::image('mini_logo', 'Значок меню'),
         ]);
 
         $form->getButtons()->setButtons([

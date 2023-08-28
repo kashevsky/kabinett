@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\SubCategory;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
@@ -11,9 +12,10 @@ class Category extends Model
 {
     use HasFactory;
     use HasSlug;
-    public function products()
+
+    public function subCategories()
     {
-        return $this->hasMany(Product::class, 'category_id');
+        return $this->hasMany(SubCategory::class, 'category_id');
     }
     public function sluggable(): array
     {
